@@ -5,7 +5,7 @@ const entries = glob
   .sync('src/**/*/index.js')
   .reduce((acc, file) => {
     const name = path.basename(path.parse(file).dir)
-    acc[name] = path.join(path.resolve(__dirname), file)
+    acc[name] = path.resolve(__dirname, file)
     return acc
   }, {})
 
@@ -13,7 +13,8 @@ const config = {
   name: 'es6lib',
   entry: entries,
   output: {
-    filename: '[name].js'
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist-webpack')
   },
   module: {
     rules: [
@@ -43,7 +44,7 @@ const config = {
   },
   resolve: {
     alias: {
-      '@': path.join(path.resolve(__dirname), 'src')
+      '@': path.resolve(__dirname, 'src')
     }
   },
   optimization: {
